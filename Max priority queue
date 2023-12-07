@@ -1,0 +1,89 @@
+#include <vector>
+#include <climits>
+class PriorityQueue {
+    // Declare the data members here
+    vector<int> pq;
+
+   public:
+    PriorityQueue() {
+        // Implement the constructor here
+        
+    }
+
+    /**************** Implement all the public functions here ***************/
+
+    void insert(int element) {
+        // Implement the insert() function here
+        pq.push_back(element);
+        int cI = pq.size()-1;
+        
+        while(cI > 0){
+            int parent = (cI - 1) / 2;
+            if(pq[cI] > pq[parent]){
+                int temp = pq[cI];
+                pq[cI] = pq[parent];
+                pq[parent] = temp;
+            }
+            else{
+                break;
+            }
+            cI = parent;
+        }
+
+    }
+
+    int getMax() {
+        // Implement the getMax() function here
+        if(isEmpty()){
+            return INT_MAX;
+        }
+        return pq[0];
+    }
+
+    int removeMax() {
+        // Implement the removeMax() function here
+        if(isEmpty()){
+            return INT_MAX;
+        }
+        int n = pq.size()-1;
+        int ans = pq[0];
+        pq[0] = pq[n];
+        pq.pop_back();
+        int pI = 0;
+        int lci = (2*pI) + 1;
+        int rci = (2*pI) + 2;
+        while(lci < pq.size()){
+            int mI = pI;
+            if(pq[mI] < pq[lci]){
+                mI = lci;
+            }
+            if(rci < pq.size() && pq[mI] < pq[rci]){
+                mI = rci;
+            }
+            if(mI == pI){
+                break;
+            }
+            int temp = pq[mI];
+            pq[mI] = pq[pI];
+            pq[pI] = temp;
+            pI = mI;
+        lci = (2 * pI) + 1;
+        rci = 2 * pI + 2;
+        }
+        
+        return ans;
+        
+
+
+    }
+
+    int getSize() { 
+        // Implement the getSize() function here
+        return pq.size();
+    }
+
+    bool isEmpty() {
+        // Implement the isEmpty() function here
+        return pq.size() == 0;
+    }
+};
