@@ -1,0 +1,47 @@
+void heapSort(int arr[], int n) {
+    // Write your code
+    for(int i=1; i<n; i++){
+       int cI = i;
+        
+        while(cI > 0){
+            int parent = (cI - 1) / 2;
+            if(arr[cI] < arr[parent]){
+                int temp = arr[cI];
+                arr[cI] = arr[parent];
+                arr[parent] = temp;
+            }
+            else{
+                break;
+            }
+            cI = parent;
+        }
+    }
+    int size = n;
+    while(size > 1){
+        int temp = arr[0];
+        arr[0] = arr[size-1];
+        arr[size-1] = temp;
+        size--;
+         int parent = 0;
+        int lci = (2*parent) + 1;
+        int rci = (2*parent) + 2;
+        while(lci < size){
+            int mI = parent;
+            if(arr[mI] > arr[lci]){
+                mI = lci;
+            }
+            if(rci < size && arr[rci] < arr[mI]){
+                mI = rci;
+            }
+            if (mI == parent) {
+                break;
+            }
+            int temp = arr[mI];
+            arr[mI] = arr[parent];
+            arr[parent] = temp;
+            parent = mI;
+            lci = (2 * parent) + 1;
+            rci = 2 * parent + 2;
+        }
+    }
+}
